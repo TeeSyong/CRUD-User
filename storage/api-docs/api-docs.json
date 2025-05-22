@@ -1,0 +1,252 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "User Management API",
+        "description": "This is the Swagger docs for the User Management API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Local Dev Server"
+        }
+    ],
+    "paths": {
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "List users",
+                "operationId": "d7a57f4d7de18fb0f92501172472c9b6",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create a new user",
+                "operationId": "9fea6f2adcb69614c521a7733358382d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "phone_number",
+                                    "password",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Test"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "test@example.com"
+                                    },
+                                    "phone_number": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user details",
+                "operationId": "40a5104e23b52137e78c3d3ac48b88a8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user",
+                "operationId": "b166772cec9714067040e77cf14beeba",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "phone_number": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete user",
+                "operationId": "ce06860a51ab016ef66e753544fe4563",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/users/bulk-delete": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Bulk delete users",
+                "operationId": "f1e14a4b8cbea949545668ee71f9cc00",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Users deleted"
+                    }
+                }
+            }
+        },
+        "/api/users/export/excel": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Export users to Excel",
+                "operationId": "4375dd0d9adace24299ea91b81d470b7",
+                "responses": {
+                    "200": {
+                        "description": "Excel file downloaded"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Users",
+            "description": "Users"
+        }
+    ]
+}
